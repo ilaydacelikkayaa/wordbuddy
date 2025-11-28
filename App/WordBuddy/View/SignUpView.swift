@@ -2,6 +2,8 @@ import SwiftUI
 
 struct SignUpView: View {
     @StateObject var viewModel = SignUpViewModel()
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.presentationMode) var presentationMode// 
     var body: some View {
         ScrollView {
             VStack {
@@ -101,13 +103,16 @@ struct SignUpView: View {
                 
                 .padding(.horizontal, 120)
                 .padding(.top, 20)
+                .onChange(of: viewModel.isSignedUp) { isSuccess in
+                    if isSuccess {
+                        self.dismiss() // View'ı kapat (NavigationLink ile gelindiyse geri git)
+                    }
+                }
                 
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .fullScreenCover(isPresented: $viewModel.isSignedUp) {
-            Text("Kayıt Başarılı! Hoş Geldiniz.") // Yerine ileride ana sayfanız gelecek.
-        }
+        
     }
 }
 #Preview {
