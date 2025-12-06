@@ -18,7 +18,7 @@ struct WordBuddyApp: App {
     var body: some Scene {
         WindowGroup {
             // Uygulamanızın başlangıç View'ı
-ContentView()
+        ContentView()
         }
     }
 }

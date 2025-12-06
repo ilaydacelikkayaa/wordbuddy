@@ -13,9 +13,6 @@ import Combine
 class UserProfileViewModel: ObservableObject {
     @Published var userName: String = ""
     @Published var isLoading: Bool = false
-    @Published var isSoundEffectsOn: Bool = true
-    @Published var selectedLanguage: String = "Türkçe" // Uygulama Dili
-    @Published var selectedAppearance: String = "Karanlık"
     private let db = Firestore.firestore()
     func fetchUser() {
         //oturum açmış kullanıcının id sini almaya çalışıyorum

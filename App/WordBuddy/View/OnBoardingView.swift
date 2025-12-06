@@ -10,8 +10,7 @@ import SwiftUI
 struct OnBoardingView: View {
     
     var body: some View {
-        NavigationStack{
-            VStack{
+                    VStack{
                 HStack(spacing:10){
                     LogoView() .frame(width: 50, height: 50)
                     Text("WordBuddy").bold().font(.title2)
@@ -58,7 +57,7 @@ struct OnBoardingView: View {
             }
         }
     }
-}
+
 
 #Preview {
     OnBoardingView()

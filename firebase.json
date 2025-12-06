@@ -1,0 +1,14 @@
+// firebase.json
+{
+  "functions": {
+    "source": "functions",
+    // ⭐️ KRİTİK EKLEME/DEĞİŞİKLİK: Runtime sürümünü belirtin ⭐️
+    "runtime": "python311",
+    
+    // Yorumlayıcının tam yolu hala gereklidir
+    "python": "/Users/ilayda/Desktop/WordBuddy/functions/venv/bin/python"
+  },
+  "emulators": {
+    // ...
+  }
+}
