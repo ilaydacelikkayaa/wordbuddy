@@ -14,7 +14,7 @@ struct DailyLessonView: View {
     let darkNavy = Color(red: 25/255, green: 25/255, blue: 112/255) //
     let gradientStart = Color(red: 255/255, green: 173/255, blue: 96/255)   // Canlı turuncu/şeftali
     let gradientEnd   = Color(red: 60/255,  green: 190/255, blue: 190/255)  // Parlak turkuaz
-
+    
     var body: some View {
         ZStack{
             LinearGradient(
@@ -22,7 +22,7 @@ struct DailyLessonView: View {
                 startPoint: .top, // Yukarıdan başla
                 endPoint: .bottom // Aşağıda bitir
             )
-            .ignoresSafeArea() //
+            .ignoresSafeArea()
             
             VStack {
                 Text("Günlük Ders")
@@ -50,7 +50,14 @@ struct DailyLessonView: View {
                         WordCardView(word:topWord) // En üstteki kartı göster
                             .frame(width: 300, height: 400)
                             .id(topWord.id ?? topWord.uuid)
-                    } else {
+                    }
+                    else if vm.isLoading{
+                        ProgressView("Kelimeler Yükleniyor...")
+                            .font(.custom("Palatino", size: 20))
+                            .padding()
+                            .foregroundStyle(darkNavy)
+                    }
+                    else {
                         VStack{
                             Text("Ders Tamamlandı!")
                                 .font(.custom("Palatino", size: 30))
@@ -72,18 +79,21 @@ struct DailyLessonView: View {
                 
                 Spacer()
                 
-                
-                HStack(spacing: 40) {
-                    
-                    ActionButton(systemName: "xmark", color: .red) {
-                        vm.handleCardAction(learned: false)
+                if vm.activeWords.last != nil {
+                    HStack(spacing: 40) {
+                        
+                        ActionButton(systemName: "xmark", color: .red) {
+                            vm.handleCardAction(learned: false)
+                        }
+                        
+                        ActionButton(systemName: "checkmark", color: .green) {
+                            vm.handleCardAction(learned: true)
+                        }
                     }
+                    .padding(.bottom, 50)
                     
-                    ActionButton(systemName: "checkmark", color: .green) {
-                        vm.handleCardAction(learned: true)
-                    }
                 }
-                .padding(.bottom, 50)
+              
                 
             }
             .onAppear {
@@ -92,26 +102,25 @@ struct DailyLessonView: View {
             }
         }
     }
-}
-// Buton View'ı (Tekrar Kullanılabilir Yapı)
-struct ActionButton: View {
-    let systemName: String
-    let color: Color
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: systemName)
-                .font(.largeTitle)
-                .foregroundColor(.white)
-                .padding(20)
-                .background(color)
-                .clipShape(Circle())
-                .shadow(radius: 10)
+    // Buton View'ı (Tekrar Kullanılabilir Yapı)
+    struct ActionButton: View {
+        let systemName: String
+        let color: Color
+        let action: () -> Void
+        
+        var body: some View {
+            Button(action: action) {
+                Image(systemName: systemName)
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+                    .padding(20)
+                    .background(color)
+                    .clipShape(Circle())
+                    .shadow(radius: 10)
+            }
         }
     }
 }
-
 #Preview {
     NavigationStack{
         DailyLessonView()

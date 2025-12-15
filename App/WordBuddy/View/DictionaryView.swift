@@ -7,19 +7,18 @@ struct DictionaryView: View {
     let gradientEnd = Color(red: 60/255, green: 190/255, blue: 190/255)
     let darkNavy = Color(red: 25/255, green: 25/255, blue: 112/255)
     let beige = Color(red: 245/255, green: 245/255, blue: 220/255)
-
+    
     var body: some View {
-       
-            
-            NavigationStack {
-                ZStack{
-                    LinearGradient(
-                        gradient: Gradient(colors: [gradientStart, gradientEnd]),
-                        startPoint: .top,
-                        endPoint: .bottom)
-                    .ignoresSafeArea()
+        
+        NavigationStack {
+            ZStack{
+                LinearGradient(
+                    gradient: Gradient(colors: [gradientStart, gradientEnd]),
+                    startPoint: .top,
+                    endPoint: .bottom)
+                .ignoresSafeArea()
                 VStack {
-                
+                    
                     ScrollView {
                         Text("Sözlüğüm")
                             .font(.custom("Palatino", size: 25))
@@ -27,46 +26,58 @@ struct DictionaryView: View {
                             .padding()
                             .bold()
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        ForEach(vm.learnedWords.sorted(by:{ $0.englishWord<$1.englishWord}),id: \.englishWord){
+                        ForEach(vm.learnedWordsInDictionary, id: \.englishWord){
                             word in
-                            VStack(alignment: .leading, spacing: 5){
-                                Text(word.englishWord)
-                                    
-                                    .font(.headline)
-                                    .foregroundColor(darkNavy)
-                                
-                                Text(word.turkishMeaning)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                                
-                                Text("Seviye: \(word.level.rawValue)")
-                                    .font(.caption)
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(beige)               .cornerRadius(8)
-                            .shadow(radius: 1)
-                            .padding(.horizontal)
-                            .padding(.vertical, 4)
+                            WordRowView(word: word)
                         }
                     }
                     .scrollContentBackground(.hidden)
                     .background(Color.clear)
                 }
+                .onAppear {
+                    vm.fetchLearnedWordsForDictionary()
+                }
                 .toolbarBackground(.hidden, for: .navigationBar)
                 .background(Color.clear)
-            }
-        }
+            }//z
+        }//nv
         
     }
 }
-#Preview {
-    // 💡 1. DictionaryViewModel için örnek veriler içeren bir instance hazırlayın.
-    let mockVM = DailyLessonViewModel()
 
-    // 💡 2. Örnek kelimeleri öğrenilmiş listeye ekleyin (Test Amaçlı).
-    // NOT: loadStaticData() içinde oluşturulan kelimeleri kullanmalıyız.
-    // DailyLessonViewModel'inizdeki kelime tanımına göre A1'den Acquire ve Book'u kullanalım:
+
+
+
+
+struct WordRowView: View {
+    let word: WordModel
+    let darkNavy = Color(red: 25/255, green: 25/255, blue: 112/255)
+    let beige = Color(red: 245/255, green: 245/255, blue: 220/255)
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5){
+            Text(word.englishWord)
+                .font(.headline)
+                .foregroundColor(darkNavy)
+                
+            Text(word.turkishMeaning)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+                
+            Text("Seviye: \(word.level.rawValue)")
+                .font(.caption)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(beige)
+        .cornerRadius(8)
+        .shadow(radius: 1)
+        .padding(.horizontal)
+        .padding(.vertical, 4)
+    }
+}
+#Preview {
+    let mockVM = DailyLessonViewModel()
 
     let mockWord1 = WordModel(
         englishWord: "Acquire",
@@ -83,9 +94,8 @@ struct DictionaryView: View {
         level: .C2
     )
 
-    // Learned listesini bu kelimelerle manuel olarak doldurun.
-    mockVM.learnedWords = [mockWord1, mockWord2]
-
     return DictionaryView()
         .environmentObject(mockVM)
 }
+
+

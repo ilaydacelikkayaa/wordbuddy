@@ -29,10 +29,9 @@ class AppCoordinatorViewModel:ObservableObject{
     func signOut(){
         do{
             try Auth.auth().signOut()
-            print(" ÇIKIŞ BAŞARILI: Kullanıcı oturumu kapatıldı. ---") // Log'u detaylandırın
+            print(" ÇIKIŞ BAŞARILI: Kullanıcı oturumu kapatıldı. ---") 
         }
         catch let signOutError as NSError{
-            // KRİTİK: Hatanın detayını konsola yazdırın
             print("ÇIKIŞ HATASI GÖZLENDİ: \(signOutError.localizedDescription) ---")
         }
     }

@@ -11,8 +11,7 @@ enum Level:String,Codable{
 }
 
 struct WordModel: Identifiable, Codable, Equatable {
-    @DocumentID var id: String?
-    
+    var id: String?
     var uuid: String? = UUID().uuidString
     let englishWord: String
     let turkishMeaning: String
@@ -24,9 +23,9 @@ struct WordModel: Identifiable, Codable, Equatable {
     
     let level: Level
     var nextReviewDate: Date? = nil
-    var ef: Double = 2.5
-    var reps: Int = 0
-    var interval: Int = 0
+    var ef: Double? = 2.5
+    var reps: Int? = 0
+    var interval: Int? = 0
 }
 
 enum LearningStatus: String, Codable {
