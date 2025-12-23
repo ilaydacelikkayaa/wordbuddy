@@ -44,4 +44,40 @@ class UserProfileViewModel: ObservableObject {
             }
         }
     }
+    func updateUserName(newName: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        // 1. Firebase'i güncelle
+        db.collection("users").document(uid).updateData([
+            "userName": newName
+        ]) { error in
+            if let error = error {
+                print("Güncelleme hatası: \(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    self.userName = newName
+                }
+            }
+        }
+    }
+
+
+    func sendPasswordReset() {
+        guard let rawEmail = Auth.auth().currentUser?.email else { return }
+        
+        let cleanEmail = rawEmail.lowercased()
+                                 .trimmingCharacters(in: .whitespacesAndNewlines)
+                                 .precomposedStringWithCanonicalMapping // Unicode hatasını çözer
+        
+        print("DEBUG: Temizlenmiş mail adresi: \(cleanEmail)")
+        
+        Auth.auth().sendPasswordReset(withEmail: cleanEmail) { error in
+            if let error = error {
+                print("HATA: \(error.localizedDescription)")
+            } else {
+                print("BAŞARILI: Mail gönderildi.")
+            }
+        }
+    }
+    
 }

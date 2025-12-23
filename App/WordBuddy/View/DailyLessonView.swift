@@ -32,7 +32,6 @@ struct DailyLessonView: View {
                     .bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                // 1. İLERLEME ÇUBUĞU (Tamamlanma Eğrisi)
                 Text("İlerleme: \(vm.currentLessonCompletedCount) / \(vm.totalWord)")
                     .font(.custom("Palatino", size: 15))
                     .bold()
@@ -57,22 +56,57 @@ struct DailyLessonView: View {
                             .padding()
                             .foregroundStyle(darkNavy)
                     }
-                    else {
-                        VStack{
-                            Text("Ders Tamamlandı!")
-                                .font(.custom("Palatino", size: 30))
-                                .font(.title)
+                    else if vm.isCurrentLevelExhausted{
+                            VStack{
+                                Text("Ders Tamamlandı!")
+                                    .font(.custom("Palatino", size: 30))
+                                    .font(.title)
+                                    .padding()
+                                Button("Baştan Başlat")
+                                {
+                                    vm.restartLesson()
+                                }
                                 .padding()
-                            Button("Baştan Başlat")
-                            {
-                                vm.restartLesson()
+                                .background(darkNavy)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 20)
                             }
-                            .padding()
-                            .background(darkNavy)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .shadow(radius: 20)
                         }
+                    
+                        else if let message = vm.errorMessage{
+                            VStack{
+                                Text(message)
+                                    .font(.custom("Palatino", size: 20))
+                                    .padding()
+                                Button("Tekrar Dene") {
+                                    vm.fetchWords()
+                                }
+                                .padding()
+                                .background(darkNavy)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .shadow(radius: 20)
+                                
+                            }
+                        }
+                    
+                    else{
+                        VStack {
+                        Text("Ders hazır. Başlamak ister misin?")
+                            .font(.custom("Palatino", size: 20))
+                            .padding()
+                            
+                        Button("Dersi Başlat") {
+                                        vm.fetchWords()
+                                    }
+                                    .padding()
+                                    .background(darkNavy)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 20)
+                                }
+                        
                     }
                 }
                 .padding(.horizontal)
@@ -80,47 +114,68 @@ struct DailyLessonView: View {
                 Spacer()
                 
                 if vm.activeWords.last != nil {
-                    HStack(spacing: 40) {
+                    VStack(spacing: 40) {
+                        Text("Do you remember this?")
+                            .padding(.top,20)
+                            .font(.headline)
+                            .bold()
+                            .foregroundStyle(Color.black)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
                         
-                        ActionButton(systemName: "xmark", color: .red) {
-                            vm.handleCardAction(learned: false)
+                        HStack(spacing:16){
+                            ActionButton(color: .gray, title:"No") {
+                                vm.handleCardAction(learned: false)
+                            }
+                            
+                            ActionButton( color: darkNavy,title:"Yes") {
+                                vm.handleCardAction(learned: true)
+                            }
                         }
-                        
-                        ActionButton(systemName: "checkmark", color: .green) {
-                            vm.handleCardAction(learned: true)
-                        }
+                        .padding(.horizontal, 24)
                     }
                     .padding(.bottom, 50)
+
+                    }
                     
                 }
-              
+                
                 
             }
             .onAppear {
-                
-                vm.updateProgress()
+                if vm.activeWords.isEmpty && !vm.isLoading && !vm.isCurrentLevelExhausted  && vm.errorMessage == nil  {
+                    vm.fetchWords()
+                }
             }
         }
     }
     // Buton View'ı (Tekrar Kullanılabilir Yapı)
     struct ActionButton: View {
-        let systemName: String
         let color: Color
+        let title:String
         let action: () -> Void
         
         var body: some View {
             Button(action: action) {
-                Image(systemName: systemName)
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .padding(20)
-                    .background(color)
-                    .clipShape(Circle())
-                    .shadow(radius: 10)
+                HStack(spacing:10){
+
+                    Text(title)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
+                .background(color)
+                .shadow(radius: 10)
+                .cornerRadius(20)
+
+
             }
         }
     }
-}
+
 #Preview {
     NavigationStack{
         DailyLessonView()

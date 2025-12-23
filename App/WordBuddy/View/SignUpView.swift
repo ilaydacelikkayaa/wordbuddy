@@ -9,36 +9,36 @@ struct SignUpView: View {
             VStack {
                 Image("welcome aesthetic").resizable().scaledToFit().frame(width: 600, height: 200)
                 
-                Text("Create your profile")
+                Text("Profilini Oluştur")
                     .font(.title2).foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.3)).bold().padding(.top, 1)
                 
                 VStack(alignment: .leading, spacing: 5) {
                     
-                    Text("User Name")
+                    Text("Kullanıcı adı")
                         .font(.caption)
                         .foregroundColor(.gray)
                         .padding(.top, 8)
-                    TextField("enter your user name", text: $viewModel.username)
+                    TextField("kullanıcı adınızı giriniz", text: $viewModel.username)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
                         .font(.caption)
-                    Text("Password")
+                    Text("Şifre")
                         .font(.caption)
                         .foregroundColor(.gray)
                         .padding(.top, 8)
-                    SecureField("enter your password", text: $viewModel.password)
+                    SecureField("şifrenizi giriniz", text: $viewModel.password)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
                         .font(.caption)
                         .textContentType(.newPassword)
                     
-                    Text("Confirm Password")
+                    Text("Şifre doğrulama")
                         .font(.caption)
                         .foregroundColor(.gray)
                         .padding(.top, 8)
-                    SecureField("enter your password again", text: $viewModel.confirmPassword)
+                    SecureField("şifrenizi tekrar giriniz", text: $viewModel.confirmPassword)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
@@ -49,7 +49,7 @@ struct SignUpView: View {
                         .font(.caption)
                         .foregroundColor(.gray)
                         .padding(.top, 8)
-                    TextField("enter your gmail", text: $viewModel.email)
+                    TextField("e-mailinizi giriniz", text: $viewModel.email)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
@@ -59,11 +59,11 @@ struct SignUpView: View {
                             viewModel.EmailChange(newValue: newValue)
                         }
                     
-                    Text("Phone Number")
+                    Text("Telefon numarası")
                         .font(.caption)
                         .foregroundColor(.gray)
                         .padding(.top, 8)
-                    TextField("enter your phone number", text: $viewModel.phoneNumber)
+                    TextField("telefon numaranızı giriniz", text: $viewModel.phoneNumber)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
@@ -85,7 +85,7 @@ struct SignUpView: View {
                                 .frame(maxWidth: .infinity)
                         }
                         else{
-                            Text("Sign Up")
+                            Text("Giriş Yap")
                         }
                         
                     }

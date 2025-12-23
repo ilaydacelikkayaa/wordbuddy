@@ -28,7 +28,10 @@ struct DictionaryView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                         ForEach(vm.learnedWordsInDictionary, id: \.englishWord){
                             word in
-                            WordRowView(word: word)
+                            WordRowView(word: word){
+                                vm.removeFromDictionary(word: word)
+
+                            }
                         }
                     }
                     .scrollContentBackground(.hidden)
@@ -39,8 +42,8 @@ struct DictionaryView: View {
                 }
                 .toolbarBackground(.hidden, for: .navigationBar)
                 .background(Color.clear)
-            }//z
-        }//nv
+            }
+        }
         
     }
 }
@@ -51,21 +54,32 @@ struct DictionaryView: View {
 
 struct WordRowView: View {
     let word: WordModel
+    let onDelete: () -> Void
+    
     let darkNavy = Color(red: 25/255, green: 25/255, blue: 112/255)
     let beige = Color(red: 245/255, green: 245/255, blue: 220/255)
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 5){
-            Text(word.englishWord)
-                .font(.headline)
-                .foregroundColor(darkNavy)
+        HStack{
+            
+            VStack(alignment: .leading, spacing: 5){
+                Text(word.englishWord)
+                    .font(.headline)
+                    .foregroundColor(darkNavy)
                 
-            Text(word.turkishMeaning)
-                .font(.subheadline)
-                .foregroundColor(.gray)
+                Text(word.turkishMeaning)
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
                 
-            Text("Seviye: \(word.level.rawValue)")
-                .font(.caption)
+                Text("Seviye: \(word.level.rawValue)")
+                    .font(.caption)
+            }
+            Spacer()
+            Button(action: onDelete) {
+                Image(systemName: "trash")
+                    .foregroundColor(.red)
+                    .font(.title3)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -76,6 +90,7 @@ struct WordRowView: View {
         .padding(.vertical, 4)
     }
 }
+
 #Preview {
     let mockVM = DailyLessonViewModel()
 
@@ -97,5 +112,6 @@ struct WordRowView: View {
     return DictionaryView()
         .environmentObject(mockVM)
 }
+
 
 

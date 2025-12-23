@@ -7,7 +7,6 @@ struct HomePage: View {
         
         TabView {
             
-            // 1. ANA SAYFA SEKIMESI (Eski içeriğinizin yeni adı)
             NavigationStack {
                 MainDashboardView()
             }
@@ -15,7 +14,6 @@ struct HomePage: View {
                 Label("Ana Sayfa", systemImage: "house.fill")
             }
             
-            // 2. SÖZLÜK SEKİMESİ
             NavigationStack {
                 DictionaryView()
             }
@@ -23,9 +21,8 @@ struct HomePage: View {
                 Label("Sözlüğüm", systemImage: "list.bullet")
             }
             
-            // 3. AYARLAR SEKİMESİ
             NavigationStack {
-                SettingsView()
+        ProfileView()
             }
             .tabItem {
                 Label("Ayarlar", systemImage: "gearshape.fill")

@@ -2,7 +2,8 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var coordinator = AppCoordinatorViewModel()
     @StateObject var dailyLessonVM = DailyLessonViewModel()
-
+    @AppStorage("hasSeenIntro") var hasSeenIntro: Bool = false
+    
     var body: some View {
         Group {
             if coordinator.isAuthenticated == nil {
@@ -17,9 +18,15 @@ struct ContentView: View {
             }
             
             else {
-                NavigationStack {
-                    OnBoardingView()
+                if !hasSeenIntro{
+                    AppIntroView()
                 }
+                else{
+                    NavigationStack {
+                            OnBoardingView()
+                                        }
+                }
+               
             }
         }   .environmentObject(coordinator)
             .environmentObject(dailyLessonVM)

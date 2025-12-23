@@ -10,13 +10,13 @@ struct SignInView: View {
                     LogoView()
                         .frame(width: 60, height: 60)
                     
-                    Text("Hello!")
+                    Text("Merhaba!")
                         .font(.largeTitle.bold())
                         .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.3))
                 }.padding(.top, 80)
                 
                 VStack(alignment: .leading, spacing:8){
-                    Text("Log in and continue your\nlearning")
+                    Text("Giriş yap ve öğrenmeye\ndevam et")
                         .font(.title2.weight(.bold))
                         .foregroundColor(Color(.darkGray))
                         .padding(.bottom, 8)
@@ -27,7 +27,7 @@ struct SignInView: View {
                         .foregroundColor(.gray)
                         .padding(.top,8)
                     
-                    TextField("enter your e-mail", text: $viewModel.email)
+                    TextField("e-mailinizi giriniz", text: $viewModel.email)
                         .padding()
                         .textContentType(.none)
                         .background(Color(.systemGray6))
@@ -37,11 +37,11 @@ struct SignInView: View {
                             viewModel.EmailChange(newValue: newValue)
                         }
                     
-                    Text("Password")
+                    Text("Şifre")
                         .font(.caption)
                         .foregroundColor(.gray)
                     
-                    SecureField("password", text: $viewModel.password)
+                    SecureField("şifrenizi giriniz", text: $viewModel.password)
                         .padding()
                         .font(.caption)
                         .background(Color(.systemGray6))
@@ -62,7 +62,7 @@ struct SignInView: View {
                                 .background(Color(red: 0, green: 0, blue: 0.5))
                         }
                         else{
-                            Text("Continue")
+                            Text("Devam Et")
                                 .font(.headline)
                                 .frame(maxWidth:300)
                                 .padding()
@@ -80,34 +80,16 @@ struct SignInView: View {
                             .frame(height: 1)
                             .foregroundColor(Color(.systemGray4))
                         
-                        Text("or")
-                            .font(.caption)
-                            .foregroundColor(Color(.systemGray))
-                            .padding(.horizontal, 10)
-                        
+                      
                         Rectangle()
                             .frame(height: 1)
                             .foregroundColor(Color(.systemGray4))
                     }
                     .padding(.vertical, 16)
                     
-                    Button(action:{
-                        print("google a giriş yapılıyor")
-                    }){
-                        HStack {
-                            Text("G").bold().foregroundStyle(Color.black)
-                            Text("Log in with Google")
-                                .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.3))
-                                .underline(true)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 16)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(12)
-                    }
+                  
                     
-                    Text("By joining, I declare that I have read and accent the Terms and Privacy Policy")
+                    Text("Katılımım ile, Şartlar’ı ve Gizlilik Politikası’nı okuduğumu ve kabul ettiğimi beyan ederim.")
                         .font(.footnote)
                         .fontWeight(.light)
                         .foregroundStyle(Color.gray)
@@ -116,12 +98,12 @@ struct SignInView: View {
                         .padding(.top, 10) // Metin altına boşluk
                     
                     HStack{
-                        Text("Don't have an account yet?")
+                        Text("Hesabınız yok mu?")
                             .font(.callout)
                         NavigationLink{
                             SignUpView()
                         } label: {
-                            Text("Sign up")
+                            Text("Kayıt Ol")
                                 .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.3))
                                 .underline()
                                 .bold()
