@@ -61,6 +61,7 @@ cd WordBuddy
 firebase emulators:start
 In the iOS app, NetworkManager.swift uses an emulator base URL by default, e.g.:
 http://127.0.0.1:5001/wordbuddy-app/us-central1
+
 Functions Endpoints
 POST /set_user_level — save user level
 GET /get_daily_lesson — return daily lesson words (userId, level, lessonSize)
@@ -68,6 +69,7 @@ POST /process_review — process review/learning result
 POST /reset_level_reviews — reset review data for a level
 GET /get_learned_words — list learned words
 POST /set_word_learned_status — set a word’s learned status
+
 Notes
 For production, update the baseURL to your deployed Functions URL.
 Tighten Firestore Security Rules and Auth settings before going live.
