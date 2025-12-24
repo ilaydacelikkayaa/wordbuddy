@@ -25,19 +25,6 @@
 - `firebase_functions`
 - `firebase_admin` (Firestore Admin)
 
-## Project Structure (short)
-WordBuddy/
-├─ App/WordBuddy/ # iOS source code (SwiftUI)
-│ ├─ Model/
-│ ├─ View/
-│ ├─ ViewModel/
-│ ├─ NetworkManager.swift
-│ └─ WordBuddyApp.swift
-├─ functions/ # Firebase Functions (Python)
-│ ├─ main.py
-│ └─ requirements.txt
-├─ firebase.json
-└─ .firebaserc
 
 
 ## Quick Start
